@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster-slim-arm32v7 AS build
 WORKDIR /app
 
 # copy csproj and restore as distinct layers
@@ -9,7 +9,7 @@ RUN dotnet restore
 COPY . ./
 RUN dotnet restore && dotnet publish -c Release -o out
 
-FROM mcr.microsoft.com/dotnet/core/runtime:3.1 AS runtime
+FROM mcr.microsoft.com/dotnet/core/runtime:3.1-buster-slim-arm32v7 AS runtime
 WORKDIR /app
 COPY --from=build /app/out ./
 ENV CONFIG_PATH=/config
